@@ -29,39 +29,21 @@ class ViewController: UIViewController {
         let acnhorEntity = AnchorEntity(plane: .horizontal)
         arView.scene.anchors.append(acnhorEntity)
         
-        loadModels { result in
-            do {
-                self.cards = try result.map(self.loadCards).get().shuffled().grid4x4()
-                for card in self.cards {
-                    acnhorEntity.addChild(card)
-                }
-            } catch {
-                print(error)
-            }
-        }
-        //cards = loadCards().shuffled().grid4x4()
+        self.loadCardsBoard().combineLatest(self.loadModels()).sink(receiveCompletion: { complete in
+            print(complete)
+        }, receiveValue: { value in
+            let board = self.attachModelsToCards(models: value.1, cards: value.0, combined: []).shuffled().grid4x4()
+            print("added \(board.count)")
+            acnhorEntity.add(board: board)
+            
+        }).store(in: &cancellable)
+        
         arView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
     }
     
-    private func loadCards(models: [ModelEntity]) -> [ModelEntity] {
+    private func loadModels() -> AnyPublisher<[Entity], Error> {
         
-        var cards: [ModelEntity] = []
-        let cardTemplate = try! ModelEntity.loadModel(named: "box")
-        let max = 16
-        for x in 0..<max {
-            let card = cardTemplate.clone(recursive: true)
-            card.name = "memory_card_\(x)"
-            card.addChild(models[x])
-            card.generateCollisionShapes(recursive: true)
-            cards.append(card)
-        }
-        
-        return cards
-    }
-    
-    private func loadModels(completion: @escaping (Result<[ModelEntity], Error>) -> Void ) {
-        
-        Entity.loadModelAsync(named: "model_1")
+        return Entity.loadModelAsync(named: "model_1")
             .append(Entity.loadModelAsync(named: "model_2"))
             .append(Entity.loadModelAsync(named: "model_3"))
             .append(Entity.loadModelAsync(named: "model_4"))
@@ -69,20 +51,46 @@ class ViewController: UIViewController {
             .append(Entity.loadModelAsync(named: "model_6"))
             .append(Entity.loadModelAsync(named: "model_7"))
             .append(Entity.loadModelAsync(named: "model_8"))
-            .collect().sink(receiveCompletion: { done in
-                switch done {
-                case .failure(_):
-                    completion(.failure(AppError.modelFailedLoading))
-                case .finished:
-                    break
-                }
-                
-            }) { models in
-                
-                completion(.success(models.clone2()))
-        }.store(in: &cancellable)
+            .collect().map{ models -> [ModelEntity] in
+                models.clone2()
+        }.eraseToAnyPublisher()
         
     }
+    
+    private func loadCardsBoard() -> AnyPublisher<[ModelEntity], Error> {
+        return Entity.loadModelAsync(named: "box").map(self.cloneCard16).eraseToAnyPublisher()
+    }
+    
+    private func cloneCard16(cardTemplate: ModelEntity) -> [ModelEntity] {
+        var cards: [ModelEntity] = []
+        let max = 16
+        for x in 0..<max {
+            let card = cardTemplate.clone(recursive: true)
+            card.name = "memory_card_\(x)"
+            card.generateCollisionShapes(recursive: true)
+            cards.append(card)
+        }
+        
+        return cards
+    }
+    
+    private func attachModelsToCards(models: [Entity], cards: [ModelEntity], combined:  [ModelEntity]) -> [ModelEntity] {
+        
+        var cardsWithModels: [ModelEntity] = combined
+        
+        if cards.isEmpty || models.isEmpty {
+            return cardsWithModels
+        }
+        
+        let card = cards.first!
+        let model = models.first!
+        card.addChild(model)
+        cardsWithModels.append(card)
+        
+        return attachModelsToCards(models: Array(models.dropFirst()), cards: Array(cards.dropFirst()), combined: cardsWithModels)
+    }
+    
+    
     
     @objc func onTap(sender: UIGestureRecognizer) {
         let tapLocation = sender.location(in: arView)

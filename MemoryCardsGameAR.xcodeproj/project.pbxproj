@@ -21,8 +21,8 @@
 		146AC10E24267726008D3704 /* model_2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10624267724008D3704 /* model_2.usdz */; };
 		146AC10F24267726008D3704 /* model_5.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10724267725008D3704 /* model_5.usdz */; };
 		146AC11024267726008D3704 /* model_6.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10824267725008D3704 /* model_6.usdz */; };
-		146AC11124267726008D3704 /* model_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10924267725008D3704 /* model_1.usdz */; };
-		146AC11224267726008D3704 /* model_4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10A24267726008D3704 /* model_4.usdz */; };
+		146AC11424276AD6008D3704 /* model_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC11324276AD5008D3704 /* model_1.usdz */; };
+		146AC11824276CA0008D3704 /* model_4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC11724276CA0008D3704 /* model_4.usdz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +42,8 @@
 		146AC10624267724008D3704 /* model_2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_2.usdz; sourceTree = "<group>"; };
 		146AC10724267725008D3704 /* model_5.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_5.usdz; sourceTree = "<group>"; };
 		146AC10824267725008D3704 /* model_6.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_6.usdz; sourceTree = "<group>"; };
-		146AC10924267725008D3704 /* model_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_1.usdz; sourceTree = "<group>"; };
-		146AC10A24267726008D3704 /* model_4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_4.usdz; sourceTree = "<group>"; };
+		146AC11324276AD5008D3704 /* model_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_1.usdz; sourceTree = "<group>"; };
+		146AC11724276CA0008D3704 /* model_4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_4.usdz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,10 +91,10 @@
 		146AC0FB24265E90008D3704 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				146AC10924267725008D3704 /* model_1.usdz */,
+				146AC11324276AD5008D3704 /* model_1.usdz */,
 				146AC10624267724008D3704 /* model_2.usdz */,
+				146AC11724276CA0008D3704 /* model_4.usdz */,
 				146AC10424267723008D3704 /* model_3.usdz */,
-				146AC10A24267726008D3704 /* model_4.usdz */,
 				146AC10724267725008D3704 /* model_5.usdz */,
 				146AC10824267725008D3704 /* model_6.usdz */,
 				146AC10524267723008D3704 /* model_7.usdz */,
@@ -179,10 +179,10 @@
 				146AC10D24267726008D3704 /* model_7.usdz in Resources */,
 				146AC10B24267726008D3704 /* model_8.usdz in Resources */,
 				146AC0F124265E78008D3704 /* Assets.xcassets in Resources */,
-				146AC11224267726008D3704 /* model_4.usdz in Resources */,
+				146AC11824276CA0008D3704 /* model_4.usdz in Resources */,
 				146AC0EF24265E76008D3704 /* Main.storyboard in Resources */,
+				146AC11424276AD6008D3704 /* model_1.usdz in Resources */,
 				146AC10C24267726008D3704 /* model_3.usdz in Resources */,
-				146AC11124267726008D3704 /* model_1.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

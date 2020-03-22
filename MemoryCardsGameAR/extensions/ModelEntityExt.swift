@@ -28,3 +28,11 @@ extension Entity {
           return flipUpController
        }
 }
+
+extension AnchorEntity {
+    func add(board: [ModelEntity]) {
+        for card in board {
+            self.addChild(card)
+        }
+    }
+}
