@@ -10,24 +10,6 @@ import Foundation
 import RealityKit
 
 extension Entity {
-    func flipUp() -> AnimationPlaybackController{
-        var currentTransform = self.transform
-        currentTransform.rotation = simd_quatf(angle: 0, axis: [1,0,0])
-    
-        let flipUpController = self.move(to: currentTransform, relativeTo: self.parent, duration: 0.25, timingFunction: .easeInOut)
-        
-       return flipUpController
-    }
-    
-    func flipDown() -> AnimationPlaybackController{
-           var currentTransform = self.transform
-        currentTransform.rotation = simd_quatf(angle: .pi, axis: [1,0,0])
-       
-           let flipUpController = self.move(to: currentTransform, relativeTo: self.parent, duration: 0.25, timingFunction: .easeInOut)
-           
-          return flipUpController
-       }
-    
     func scaleUpRelativeTo(_ card: Entity?) -> Entity {
         var scaleRatio = self.scale(relativeTo: card)
         scaleRatio.addProduct(scaleRatio, scaleRatio)
@@ -38,7 +20,8 @@ extension Entity {
 }
 
 extension AnchorEntity {
-    func add(board: [ModelEntity]) {
+    
+    func add(board: [CardEntity]) {
         for card in board {
             self.addChild(card)
         }
@@ -52,5 +35,75 @@ extension AnchorEntity {
         occlusionBox.position.y = -boxSize / 2
         addChild(occlusionBox)
     }
+    
+    func checkTwoCardsRevelaed() -> Bool {
+        var count = 0
+        for child in self.children where child is CardEntity {
+            if (child as? CardEntity)?.card.revealed ?? false {
+                count += 1
+            }
+        }
+        
+        return (count > 0 && count % 2 == 0)
+    }
+}
+
+extension ARView {
+    
+    func checkTwoCardsRevelaed() -> Bool {
+        var count = 0
+        for anchor in self.scene.anchors {
+            if anchor is AnchorEntity {
+                for child in anchor.children where child is CardEntity {
+                    if (child as? CardEntity)?.card.revealed ?? false {
+                        count += 1
+                    }
+                }
+            }
+        }
+        return (count > 0 && count % 2 == 0)
+    }
+    
+    
+    func isMatchingCardsRevelaed() -> Bool {
+        
+        var revealedCardNames: [String] = []
+        
+        for anchor in self.scene.anchors {
+            if anchor is AnchorEntity {
+                for child in anchor.children where child is CardEntity {
+                    if (child as? CardEntity)?.card.revealed ?? false {
+                        revealedCardNames.append((child as! CardEntity).card.attachedModelName)
+                    }
+                }
+            }
+        }
+        return (revealedCardNames.first == revealedCardNames.last)
+    }
+    
+    func hideAllCards() {
+        
+        for anchor in self.scene.anchors {
+            if anchor is AnchorEntity {
+                for child in anchor.children where child is CardEntity {
+                   _ = (child as? CardEntity)?.hide(duration: 0.25)
+                    (child as? CardEntity)?.setCardState(revealed: false)
+                }
+            }
+        }
+        }
+    
+    func removeCards(with modelName: String) {
+        for anchor in self.scene.anchors {
+            if anchor is AnchorEntity {
+                for child in anchor.children where child is CardEntity {
+                   if (child as! CardEntity).card.attachedModelName == modelName {
+                    anchor.removeChild(child)
+                }
+            }
+        }
+    }
+        }
+        
 }
 

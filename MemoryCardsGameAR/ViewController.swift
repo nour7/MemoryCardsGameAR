@@ -22,11 +22,16 @@ class ViewController: UIViewController {
     private var flipUpController: AnimationPlaybackController? = nil
     private var flipDownContrller: AnimationPlaybackController? = nil
     private var cancellable = Set<AnyCancellable>()
+    private var isTwoCardsRevelead = true
+    private var canSelectAnotherCard = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        CardComponent.registerComponent()
+        
         let acnhorEntity = AnchorEntity(plane: .horizontal)
+        acnhorEntity.name = "plane_anchor"
         
         arView.scene.anchors.append(acnhorEntity)
         
@@ -59,32 +64,37 @@ class ViewController: UIViewController {
             .append(Entity.loadModelAsync(named: "model_6"))
             .append(Entity.loadModelAsync(named: "model_7"))
             .append(Entity.loadModelAsync(named: "model_8"))
-            .collect().map{ models -> [ModelEntity] in
+            .collect().map{ models -> [Entity] in
                 models.clone2()
         }.eraseToAnyPublisher()
         
     }
     
-    private func loadCardsBoard() -> AnyPublisher<[ModelEntity], Error> {
+    private func loadCardsBoard() -> AnyPublisher<[CardEntity], Error> {
+        //Entity.loadAsync(named: "box", in: nil).map(self.cloneCard16).eraseToAnyPublisher()
         return Entity.loadModelAsync(named: "box").map(self.cloneCard16).eraseToAnyPublisher()
     }
     
-    private func cloneCard16(cardTemplate: ModelEntity) -> [ModelEntity] {
-        var cards: [ModelEntity] = []
+    private func cloneCard16(cardTemplate: ModelEntity) -> [CardEntity] {
+        var cards: [CardEntity] = []
         let max = 16
         for x in 0..<max {
-            let card = cardTemplate.clone(recursive: true)
-            card.name = "memory_card_\(x)"
-            card.generateCollisionShapes(recursive: true)
-            cards.append(card)
+            let cardEntity = CardEntity()
+            cardEntity.model = cardTemplate.model
+            cardEntity.transform = cardTemplate.transform
+            cardEntity.name = "memory_card_\(x)"
+            cardEntity.card.revealed = false
+            cardEntity.card.name = "memory_card_\(x)"
+            cardEntity.generateCollisionShapes(recursive: true)
+            cards.append(cardEntity)
         }
         
         return cards
     }
     
-    private func attachModelsToCards(models: [Entity], cards: [ModelEntity], combined:  [ModelEntity]) -> [ModelEntity] {
+    private func attachModelsToCards(models: [Entity], cards: [CardEntity], combined:  [CardEntity]) -> [CardEntity] {
         
-        var cardsWithModels: [ModelEntity] = combined
+        var cardsWithModels: [CardEntity] = combined
         
         if cards.isEmpty || models.isEmpty {
             return cardsWithModels
@@ -92,6 +102,9 @@ class ViewController: UIViewController {
         
         let card = cards.first!
         let model = models.first!
+        print(model.debugDescription)
+        card.card.attachedModelName = model.name
+        print(model.name)
         card.addChild(model)
         cardsWithModels.append(card)
         
@@ -101,11 +114,52 @@ class ViewController: UIViewController {
     
     
     @objc func onTap(sender: UIGestureRecognizer) {
-        let tapLocation = sender.location(in: arView)
         
-        if let card = arView.entity(at: tapLocation) {
-            flipUpController = card.flipUp()
+        if canSelectAnotherCard {
+            let tapLocation = sender.location(in: arView)
+            if let card = arView.entity(at: tapLocation) as? CardEntity {
+                if !card.card.revealed {
+                    isTwoCardsRevelead = !isTwoCardsRevelead
+                    flipUpController = card.reveal(duration: 0.25)
+                    card.setCardState(revealed: true)
+                    
+                    Timer.scheduledTimer(withTimeInterval: 0.26, repeats: true) { timer in
+                        guard let controller = self.flipUpController else {
+                            timer.invalidate()
+                            return
+                        }
+                        
+                        if controller.isComplete {
+                            timer.invalidate()
+                            card.playModelAnimation()
+                            self.gameLogic(cardModelName: card.card.attachedModelName)
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    func gameLogic(cardModelName: String) {
+        
+        var similarCardsFound = false
+        if self.arView.checkTwoCardsRevelaed() {
+            canSelectAnotherCard = false
+            if self.arView.isMatchingCardsRevelaed() {
+                similarCardsFound = true
+            } else {
+                similarCardsFound = false
+            }
+        
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+            if !similarCardsFound {
+                self.arView.hideAllCards()
+            } else {
+                self.arView.removeCards(with: cardModelName)
+            }
+            self.canSelectAnotherCard = true
+        }
+            }
     }
     
 }

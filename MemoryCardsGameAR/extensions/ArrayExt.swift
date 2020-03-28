@@ -9,9 +9,24 @@
 import UIKit
 import RealityKit
 
-extension Array where Element: ModelEntity {
+extension Array where Element: Entity {
     
-    func grid4x4() -> [ModelEntity] {
+    func clone2() -> [Entity] {
+          var cloned: [Entity] = []
+          
+          for model in self {
+            model.name = UUID.init().uuidString
+            cloned.append(model)
+            cloned.append(model.clone(recursive: true))
+          }
+          
+          return cloned
+      }
+}
+
+extension Array where Element: CardEntity {
+    
+    func grid4x4() -> [CardEntity] {
         
         for (index, card) in self.enumerated() {
             let x = Float(index % 4) - 1.5
@@ -22,20 +37,9 @@ extension Array where Element: ModelEntity {
         return self
     }
     
-    func clone2() -> [ModelEntity] {
-        var cloned: [ModelEntity] = []
+    func cardFlippedDownOnStart() -> [CardEntity]  {
         
-        for model in self {
-            cloned.append(model)
-            cloned.append(model.clone(recursive: true))
-        }
-        
-        return cloned
-    }
-    
-    func cardFlippedDownOnStart() -> [ModelEntity]  {
-        
-        var flippedDownCards: [ModelEntity] = []
+        var flippedDownCards: [CardEntity] = []
         
         for model in self {
             let flippedModel = model.clone(recursive: true)
@@ -44,5 +48,6 @@ extension Array where Element: ModelEntity {
         }
         return flippedDownCards
     }
+
 }
 

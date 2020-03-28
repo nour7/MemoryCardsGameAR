@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14514577242F4F5900542D0C /* model_4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 14514576242F4F5900542D0C /* model_4.usdz */; };
+		14514579242F607D00542D0C /* CardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14514578242F607D00542D0C /* CardEntity.swift */; };
 		146AC0E824265E76008D3704 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC0E724265E76008D3704 /* AppDelegate.swift */; };
 		146AC0EA24265E76008D3704 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC0E924265E76008D3704 /* ViewController.swift */; };
 		146AC0EF24265E76008D3704 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146AC0ED24265E76008D3704 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		14514576242F4F5900542D0C /* model_4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_4.usdz; sourceTree = "<group>"; };
+		14514578242F607D00542D0C /* CardEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEntity.swift; sourceTree = "<group>"; };
 		146AC0E424265E76008D3704 /* MemoryCardsGameAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCardsGameAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146AC0E724265E76008D3704 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146AC0E924265E76008D3704 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				146AC0F024265E78008D3704 /* Assets.xcassets */,
 				146AC0F224265E78008D3704 /* LaunchScreen.storyboard */,
 				146AC0F524265E78008D3704 /* Info.plist */,
+				14514578242F607D00542D0C /* CardEntity.swift */,
 			);
 			path = MemoryCardsGameAR;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				146AC0E824265E76008D3704 /* AppDelegate.swift in Sources */,
 				146AC1022426633B008D3704 /* ModelEntityExt.swift in Sources */,
 				146AC10024265F98008D3704 /* ArrayExt.swift in Sources */,
+				14514579242F607D00542D0C /* CardEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
