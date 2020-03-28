@@ -8,6 +8,7 @@
 
 import Foundation
 import RealityKit
+import CoreGraphics
 
 extension Entity {
     func scaleUpRelativeTo(_ card: Entity?) -> Entity {
@@ -36,6 +37,28 @@ extension AnchorEntity {
         addChild(occlusionBox)
     }
     
+    func addTimerEntity() {
+        let textMesh = generateTextMesh(for: String(30))
+        
+        let material = SimpleMaterial(color: .green, isMetallic: true)
+        let textModel = ModelEntity(mesh: textMesh, materials: [material])
+        textModel.scale = SIMD3<Float>(0.02, 0.02, 0.1)
+        textModel.name = "timer"
+        textModel.setPosition(SIMD3<Float>(0.10, 0.05, 0), relativeTo: self)
+        addChild(textModel)
+        
+    }
+    
+    func generateTextMesh(for text: String) -> MeshResource {
+        return  MeshResource.generateText(
+               text,
+               extrusionDepth: 0.1,
+               font: .systemFont(ofSize: 2),
+               containerFrame: .zero,
+               alignment: .left,
+               lineBreakMode: .byWordWrapping)
+    }
+    
     func checkTwoCardsRevelaed() -> Bool {
         var count = 0
         for child in self.children where child is CardEntity {
@@ -49,6 +72,14 @@ extension AnchorEntity {
 }
 
 extension ARView {
+    
+    func countDown(time: Int) {
+        for anchor in self.scene.anchors {
+            if anchor is AnchorEntity {
+                (anchor.findEntity(named: "timer") as? ModelEntity)?.model?.mesh = (anchor as! AnchorEntity).generateTextMesh(for: String(time))
+            }
+        }
+    }
     
     func checkTwoCardsRevelaed() -> Bool {
         var count = 0
@@ -106,6 +137,14 @@ extension ARView {
         }
     }
         }
+    
+    func gameWon() {
+        
+    }
+    
+    func gameLost() {
+        
+    }
         
 }
 

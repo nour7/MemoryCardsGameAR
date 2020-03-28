@@ -24,6 +24,9 @@ class ViewController: UIViewController {
     private var cancellable = Set<AnyCancellable>()
     private var isTwoCardsRevelead = true
     private var canSelectAnotherCard = true
+    private var timerStarted = false
+    private var countDownTimer = 30
+    private var gameWinnerState = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,7 @@ class ViewController: UIViewController {
         arView.scene.anchors.append(acnhorEntity)
         
         acnhorEntity.addOcclusionBox()
+        acnhorEntity.addTimerEntity()
         
         self.loadCardsBoard().combineLatest(self.loadModels()).sink(receiveCompletion: { complete in
             print(complete)
@@ -45,13 +49,14 @@ class ViewController: UIViewController {
             let board = self.attachModelsToCards(models: scaledUpModelsRelativeToCards, cards: cards, combined: []).shuffled().grid4x4().cardFlippedDownOnStart()
             print("added \(board.count)")
             acnhorEntity.add(board: board)
-            
+            self.startCountdownTimer()
         }).store(in: &cancellable)
         
         
         
         arView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
     }
+    
     
     private func loadModels() -> AnyPublisher<[Entity], Error> {
         
@@ -113,6 +118,7 @@ class ViewController: UIViewController {
     @objc func onTap(sender: UIGestureRecognizer) {
         
         if canSelectAnotherCard {
+            startCountdownTimer()
             let tapLocation = sender.location(in: arView)
             if let card = arView.entity(at: tapLocation) as? CardEntity {
                 if !card.card.revealed {
@@ -137,6 +143,23 @@ class ViewController: UIViewController {
         }
     }
     
+    func startCountdownTimer() {
+        
+        if !timerStarted {
+            timerStarted = true
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                self.countDownTimer -= 1
+                self.arView.countDown(time: self.countDownTimer)
+                if self.countDownTimer <= 0 {
+                    timer.invalidate()
+                    self.gameEnd(with: false)
+                }
+                    //showGameEnd
+            }
+           
+        }
+    }
+    
     func gameLogic(cardModelName: String) {
         
         var similarCardsFound = false
@@ -157,6 +180,15 @@ class ViewController: UIViewController {
             self.canSelectAnotherCard = true
         }
             }
+    }
+    
+    func gameEnd(with winnerState: Bool) {
+        
+        if winnerState {
+            arView.gameWon()
+        } else {
+            arView.gameLost()
+        }
     }
     
 }
