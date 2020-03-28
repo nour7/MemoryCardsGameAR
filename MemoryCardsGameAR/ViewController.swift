@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         CardComponent.registerComponent()
         
         let acnhorEntity = AnchorEntity(plane: .horizontal)
-        acnhorEntity.name = "plane_anchor"
         
         arView.scene.anchors.append(acnhorEntity)
         
@@ -71,7 +70,6 @@ class ViewController: UIViewController {
     }
     
     private func loadCardsBoard() -> AnyPublisher<[CardEntity], Error> {
-        //Entity.loadAsync(named: "box", in: nil).map(self.cloneCard16).eraseToAnyPublisher()
         return Entity.loadModelAsync(named: "box").map(self.cloneCard16).eraseToAnyPublisher()
     }
     
@@ -83,6 +81,7 @@ class ViewController: UIViewController {
             cardEntity.model = cardTemplate.model
             cardEntity.transform = cardTemplate.transform
             cardEntity.name = "memory_card_\(x)"
+            cardEntity.model?.materials = [SimpleMaterial(color: .orange, roughness: MaterialScalarParameter(floatLiteral: 0.3), isMetallic: true)]
             cardEntity.card.revealed = false
             cardEntity.card.name = "memory_card_\(x)"
             cardEntity.generateCollisionShapes(recursive: true)
@@ -102,9 +101,7 @@ class ViewController: UIViewController {
         
         let card = cards.first!
         let model = models.first!
-        print(model.debugDescription)
         card.card.attachedModelName = model.name
-        print(model.name)
         card.addChild(model)
         cardsWithModels.append(card)
         
