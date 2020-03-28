@@ -27,16 +27,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let acnhorEntity = AnchorEntity(plane: .horizontal)
+        
         arView.scene.anchors.append(acnhorEntity)
+        
+        acnhorEntity.addOcclusionBox()
         
         self.loadCardsBoard().combineLatest(self.loadModels()).sink(receiveCompletion: { complete in
             print(complete)
         }, receiveValue: { value in
-            let board = self.attachModelsToCards(models: value.1, cards: value.0, combined: []).shuffled().grid4x4()
+            let (cards, models) = value
+            //optional if the models are smaller than cards
+            let scaledUpModelsRelativeToCards = models.map{$0.scaleUpRelativeTo(cards.first)}
+            let board = self.attachModelsToCards(models: scaledUpModelsRelativeToCards, cards: cards, combined: []).shuffled().grid4x4().cardFlippedDownOnStart()
             print("added \(board.count)")
             acnhorEntity.add(board: board)
             
         }).store(in: &cancellable)
+        
+        
         
         arView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTap)))
     }

@@ -12,15 +12,15 @@ import RealityKit
 extension Array where Element: ModelEntity {
     
     func grid4x4() -> [ModelEntity] {
-           
-           for (index, card) in self.enumerated() {
-               let x = Float(index % 4) - 1.5
-               let z = Float(index / 4) - 1.5
-               card.position = [x * 0.05,0, z * 0.05]
-           }
-           
-           return self
-       }
+        
+        for (index, card) in self.enumerated() {
+            let x = Float(index % 4) - 1.5
+            let z = Float(index / 4) - 1.5
+            card.position = [x * 0.05,0, z * 0.05]
+        }
+        
+        return self
+    }
     
     func clone2() -> [ModelEntity] {
         var cloned: [ModelEntity] = []
@@ -31,6 +31,18 @@ extension Array where Element: ModelEntity {
         }
         
         return cloned
+    }
+    
+    func cardFlippedDownOnStart() -> [ModelEntity]  {
+        
+        var flippedDownCards: [ModelEntity] = []
+        
+        for model in self {
+            let flippedModel = model.clone(recursive: true)
+            flippedModel.transform.rotation = simd_quatf(angle: .pi, axis: [1,0,0])
+            flippedDownCards.append(flippedModel)
+        }
+        return flippedDownCards
     }
 }
 
