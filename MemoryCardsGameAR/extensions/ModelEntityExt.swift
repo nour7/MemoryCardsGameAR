@@ -86,6 +86,7 @@ extension ARView {
         for anchor in self.scene.anchors {
             if anchor is AnchorEntity {
                 for child in anchor.children where child is CardEntity {
+                     child.stopAllAnimations()
                    _ = (child as? CardEntity)?.hide(duration: 0.25)
                     (child as? CardEntity)?.setCardState(revealed: false)
                 }
@@ -98,6 +99,7 @@ extension ARView {
             if anchor is AnchorEntity {
                 for child in anchor.children where child is CardEntity {
                    if (child as! CardEntity).card.attachedModelName == modelName {
+                    child.stopAllAnimations()
                     anchor.removeChild(child)
                 }
             }

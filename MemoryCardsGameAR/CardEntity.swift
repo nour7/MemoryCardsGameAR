@@ -50,7 +50,7 @@ extension CardEntity {
     
     func playModelAnimation() {
         if let attachedModelAnimation = ((self.children.first)?.availableAnimations), !attachedModelAnimation.isEmpty  {
-            self.children.first?.playAnimation(attachedModelAnimation.first!)
+            self.children.first?.playAnimation(attachedModelAnimation.first!.repeat())
         }
     }
 }
