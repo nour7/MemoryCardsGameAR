@@ -92,7 +92,7 @@ extension ARView {
             return false
         }
         
-        return anchorEntity.getNumberOfcards() == 0
+        return anchorEntity.isEmptyBoard()
     }
     
     func gameEndWith(text: String) {

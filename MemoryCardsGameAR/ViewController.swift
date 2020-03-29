@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     private var flipUpController: AnimationPlaybackController? = nil
     private var flipDownContrller: AnimationPlaybackController? = nil
     private var cancellable = Set<AnyCancellable>()
-    private var isTwoCardsRevelead = true
     private var canSelectAnotherCard = true
     private var timerStarted = false
     private var countDownTimer = 60
@@ -124,7 +123,6 @@ class ViewController: UIViewController {
                 
                 if !card.card.revealed {
                     revealedCards.append(card)
-                    isTwoCardsRevelead = !isTwoCardsRevelead
                     flipUpController = card.reveal(duration: 0.25)
                     card.setCardState(revealed: true)
                     

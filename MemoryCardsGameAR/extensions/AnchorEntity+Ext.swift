@@ -70,12 +70,9 @@ extension AnchorEntity {
         return (count > 0 && count % 2 == 0)
     }
     
-    func getNumberOfcards() -> Int {
-        var count = 0
-        for child in self.children where child is CardEntity {
-                count += 1
-        }
-        return count
+    func isEmptyBoard() -> Bool {
+        //only timer is left
+        return self.children.count == 2
     }
     
 }
