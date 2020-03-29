@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		14514579242F607D00542D0C /* CardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14514578242F607D00542D0C /* CardEntity.swift */; };
-		1451457B242FA76600542D0C /* model_4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 1451457A242FA76600542D0C /* model_4.usdz */; };
 		146AC0E824265E76008D3704 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC0E724265E76008D3704 /* AppDelegate.swift */; };
 		146AC0EA24265E76008D3704 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC0E924265E76008D3704 /* ViewController.swift */; };
 		146AC0EF24265E76008D3704 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146AC0ED24265E76008D3704 /* Main.storyboard */; };
@@ -17,19 +16,11 @@
 		146AC0FD24265EAA008D3704 /* box.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC0FC24265EAA008D3704 /* box.usdz */; };
 		146AC10024265F98008D3704 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC0FF24265F98008D3704 /* Array+Ext.swift */; };
 		146AC1022426633B008D3704 /* AnchorEntity+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AC1012426633B008D3704 /* AnchorEntity+Ext.swift */; };
-		146AC10B24267726008D3704 /* model_8.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10324267723008D3704 /* model_8.usdz */; };
-		146AC10C24267726008D3704 /* model_3.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10424267723008D3704 /* model_3.usdz */; };
-		146AC10D24267726008D3704 /* model_7.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10524267723008D3704 /* model_7.usdz */; };
-		146AC10E24267726008D3704 /* model_2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10624267724008D3704 /* model_2.usdz */; };
-		146AC10F24267726008D3704 /* model_5.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10724267725008D3704 /* model_5.usdz */; };
-		146AC11024267726008D3704 /* model_6.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC10824267725008D3704 /* model_6.usdz */; };
-		146AC11424276AD6008D3704 /* model_1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 146AC11324276AD5008D3704 /* model_1.usdz */; };
 		14BC76542430A139007FC4BA /* ArView+Exts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC76532430A139007FC4BA /* ArView+Exts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14514578242F607D00542D0C /* CardEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEntity.swift; sourceTree = "<group>"; };
-		1451457A242FA76600542D0C /* model_4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_4.usdz; sourceTree = "<group>"; };
 		146AC0E424265E76008D3704 /* MemoryCardsGameAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryCardsGameAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146AC0E724265E76008D3704 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146AC0E924265E76008D3704 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,13 +31,6 @@
 		146AC0FC24265EAA008D3704 /* box.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = box.usdz; sourceTree = "<group>"; };
 		146AC0FF24265F98008D3704 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
 		146AC1012426633B008D3704 /* AnchorEntity+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnchorEntity+Ext.swift"; sourceTree = "<group>"; };
-		146AC10324267723008D3704 /* model_8.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_8.usdz; sourceTree = "<group>"; };
-		146AC10424267723008D3704 /* model_3.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_3.usdz; sourceTree = "<group>"; };
-		146AC10524267723008D3704 /* model_7.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_7.usdz; sourceTree = "<group>"; };
-		146AC10624267724008D3704 /* model_2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_2.usdz; sourceTree = "<group>"; };
-		146AC10724267725008D3704 /* model_5.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_5.usdz; sourceTree = "<group>"; };
-		146AC10824267725008D3704 /* model_6.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_6.usdz; sourceTree = "<group>"; };
-		146AC11324276AD5008D3704 /* model_1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = model_1.usdz; sourceTree = "<group>"; };
 		14BC76532430A139007FC4BA /* ArView+Exts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArView+Exts.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,14 +80,6 @@
 		146AC0FB24265E90008D3704 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				146AC11324276AD5008D3704 /* model_1.usdz */,
-				146AC10624267724008D3704 /* model_2.usdz */,
-				146AC10424267723008D3704 /* model_3.usdz */,
-				146AC10724267725008D3704 /* model_5.usdz */,
-				1451457A242FA76600542D0C /* model_4.usdz */,
-				146AC10824267725008D3704 /* model_6.usdz */,
-				146AC10524267723008D3704 /* model_7.usdz */,
-				146AC10324267723008D3704 /* model_8.usdz */,
 				146AC0FC24265EAA008D3704 /* box.usdz */,
 			);
 			path = Models;
@@ -179,16 +155,8 @@
 			files = (
 				146AC0F424265E78008D3704 /* LaunchScreen.storyboard in Resources */,
 				146AC0FD24265EAA008D3704 /* box.usdz in Resources */,
-				146AC11024267726008D3704 /* model_6.usdz in Resources */,
-				146AC10F24267726008D3704 /* model_5.usdz in Resources */,
-				1451457B242FA76600542D0C /* model_4.usdz in Resources */,
-				146AC10E24267726008D3704 /* model_2.usdz in Resources */,
-				146AC10D24267726008D3704 /* model_7.usdz in Resources */,
-				146AC10B24267726008D3704 /* model_8.usdz in Resources */,
 				146AC0F124265E78008D3704 /* Assets.xcassets in Resources */,
 				146AC0EF24265E76008D3704 /* Main.storyboard in Resources */,
-				146AC11424276AD6008D3704 /* model_1.usdz in Resources */,
-				146AC10C24267726008D3704 /* model_3.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

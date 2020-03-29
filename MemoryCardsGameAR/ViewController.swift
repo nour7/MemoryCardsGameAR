@@ -58,6 +58,10 @@ class ViewController: UIViewController {
     
     
     private func loadModels() -> AnyPublisher<[Entity], Error> {
+        //Get your own 3d models
+        //I used Adobe Mixamo website
+        //Convert them from fbs to usdz using Reality convertor tool
+        // drop them in the Models folder and name them model_1 to model_8
         
         return Entity.loadModelAsync(named: "model_1")
             .append(Entity.loadModelAsync(named: "model_2"))
