@@ -25,8 +25,9 @@ class ViewController: UIViewController {
     private var isTwoCardsRevelead = true
     private var canSelectAnotherCard = true
     private var timerStarted = false
-    private var countDownTimer = 30
+    private var countDownTimer = 60
     private var gameWinnerState = false
+    private var revealedCards: [CardEntity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,7 @@ class ViewController: UIViewController {
         arView.scene.anchors.append(acnhorEntity)
         
         acnhorEntity.addOcclusionBox()
-        acnhorEntity.addTimerEntity()
+        acnhorEntity.addTimerEntity(maxTime: String(countDownTimer))
         
         self.loadCardsBoard().combineLatest(self.loadModels()).sink(receiveCompletion: { complete in
             print(complete)
@@ -49,7 +50,6 @@ class ViewController: UIViewController {
             let board = self.attachModelsToCards(models: scaledUpModelsRelativeToCards, cards: cards, combined: []).shuffled().grid4x4().cardFlippedDownOnStart()
             print("added \(board.count)")
             acnhorEntity.add(board: board)
-            self.startCountdownTimer()
         }).store(in: &cancellable)
         
         
@@ -121,7 +121,9 @@ class ViewController: UIViewController {
             startCountdownTimer()
             let tapLocation = sender.location(in: arView)
             if let card = arView.entity(at: tapLocation) as? CardEntity {
+                
                 if !card.card.revealed {
+                    revealedCards.append(card)
                     isTwoCardsRevelead = !isTwoCardsRevelead
                     flipUpController = card.reveal(duration: 0.25)
                     card.setCardState(revealed: true)
@@ -154,9 +156,9 @@ class ViewController: UIViewController {
                     timer.invalidate()
                     self.gameEnd(with: false)
                 }
-                    //showGameEnd
+                //showGameEnd
             }
-           
+            
         }
     }
     
@@ -170,25 +172,29 @@ class ViewController: UIViewController {
             } else {
                 similarCardsFound = false
             }
-        
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-            if !similarCardsFound {
-                self.arView.hideAllCards()
-            } else {
-                self.arView.removeCards(with: cardModelName)
+            
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
+                if !similarCardsFound {
+                    self.arView.hideAllCards()
+                    self.revealedCards = []
+                } else {
+                    for card in self.revealedCards {
+                        card.removeFromParent()
+                    }
+                    self.revealedCards = []
+                    
+                    if self.arView.checkGameEnd() {
+                        self.gameEnd(with: true)
+                    }
+                }
+                self.canSelectAnotherCard = true
             }
-            self.canSelectAnotherCard = true
         }
-            }
     }
     
     func gameEnd(with winnerState: Bool) {
-        
-        if winnerState {
-            arView.gameWon()
-        } else {
-            arView.gameLost()
-        }
+        arView.removeAll()
+        arView.gameEndWith(text: (winnerState) ? "You Won" : "You Lost")
     }
     
 }

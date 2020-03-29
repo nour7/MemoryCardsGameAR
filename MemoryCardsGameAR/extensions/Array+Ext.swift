@@ -13,11 +13,12 @@ extension Array where Element: Entity {
     
     func clone2() -> [Entity] {
           var cloned: [Entity] = []
-          
+          var count = 1
           for model in self {
-            model.name = UUID.init().uuidString
+            model.name = "model_\(count)"
             cloned.append(model)
             cloned.append(model.clone(recursive: true))
+            count += 1 
           }
           
           return cloned
